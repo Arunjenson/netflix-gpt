@@ -17,6 +17,9 @@ const Login = () => {
           <h1 className="text-4xl font-bold text-white mb-4">
             {isSignInForm ? 'Sign In' : 'Sign Up'}
           </h1>
+          {!isSignInForm ? (
+            <input type="text" placeholder="Full Name" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
+          ) : null}
           <input type="text" placeholder="Email or phone number" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
           <input type="password" placeholder="Password" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
           <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 w-full rounded">
