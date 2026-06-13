@@ -1,10 +1,21 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Header from "./Header"
+import {validateData} from "../utils/validate"
 
 const Login = () => {
   const [isSignInForm,setIsSignInForm] = useState(true)
+  const [errorMessage,setErrorMessage] = useState(null)
   const toggleForm = () => {
     setIsSignInForm(!isSignInForm)
+  }
+  const emailRef = useRef(null);
+  const nameRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const validation = validateData(emailRef.current.value,passwordRef.current.value);
+    setErrorMessage(validation);
   }
   return (
     <div className="relative h-screen w-screen">
@@ -18,11 +29,12 @@ const Login = () => {
             {isSignInForm ? 'Sign In' : 'Sign Up'}
           </h1>
           {!isSignInForm ? (
-            <input type="text" placeholder="Full Name" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
+            <input ref={nameRef} type="text"  placeholder="Full Name" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
           ) : null}
-          <input type="text" placeholder="Email or phone number" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
-          <input type="password" placeholder="Password" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
-          <button className="bg-red-600 cursor-pointer hover:bg-red-700 text-white font-bold py-2 px-4 w-full rounded">
+          <input ref={emailRef} type="text" placeholder="Email or phone number" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
+          <input ref={passwordRef} type="password" placeholder="Password" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
+          <p className="text-red-500 mb-2 font-bold text-lg">{errorMessage}</p>
+          <button onClick={handleFormSubmit} className="bg-red-600 cursor-pointer hover:bg-red-700 text-white font-bold py-2 px-4 w-full rounded">
             {isSignInForm ? 'Sign In' : 'Sign Up'}
           </button>
           <p className="text-white mt-10">

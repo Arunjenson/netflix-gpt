@@ -2,6 +2,8 @@
 
  - Use Vite to Setup the Application
  - Configure tailwind CSS
+ - Routing
+ - Form Validation
 
 
 ## Features 
