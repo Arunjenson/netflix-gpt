@@ -22,12 +22,12 @@ const Login = () => {
           ) : null}
           <input type="text" placeholder="Email or phone number" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
           <input type="password" placeholder="Password" className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"/>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 w-full rounded">
+          <button className="bg-red-600 cursor-pointer hover:bg-red-700 text-white font-bold py-2 px-4 w-full rounded">
             {isSignInForm ? 'Sign In' : 'Sign Up'}
           </button>
-          <p className="text-white mt-4">
+          <p className="text-white mt-10">
             {isSignInForm ? 'New to Netflix?' : 'Already have an account?'}{' '}
-            <button onClick={toggleForm} className="text-white hover:underline">
+            <button onClick={toggleForm} className="text-white hover:underline cursor-pointer transition-all">
               {isSignInForm ? 'Sign up now' : 'Sign in now'}
             </button>
           </p>
