@@ -23,21 +23,23 @@ const Header = () => {
       <div className="">
         <Logo />
       </div>
-      <div className="flex items-center gap-4">
-        {user?.photoURL && (
-          <img
-            src={user.photoURL}
-            alt="Profile"
-            className="w-10 h-10 rounded-full"
-          />
-        )}
-        <button
-          onClick={handleSignOut}
-          className="bg-red-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
-        >
-          Sign out
-        </button>
-      </div>
+      {user && (
+        <div className="flex items-center gap-4">
+          {user.photoURL && (
+            <img
+              src={user.photoURL}
+              alt="Profile"
+              className="w-10 h-10 rounded-full"
+            />
+          )}
+          <button
+            onClick={handleSignOut}
+            className="bg-red-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
+          >
+            Sign out
+          </button>
+        </div>
+      )}
     </div>
   );
 };
