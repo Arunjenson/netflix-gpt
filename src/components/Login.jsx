@@ -8,8 +8,11 @@ import Header from "./Header";
 import { validateData } from "../utils/validate";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
@@ -63,6 +66,9 @@ const Login = () => {
             photoURL: "https://avatars.githubusercontent.com/u/116062066?v=4",
           })
             .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              console.log({ uid, email, displayName, photoURL });
+              dispatch(addUser({ uid, email, displayName, photoURL }));
               navigate("/browse");
             })
             .catch((error) => {
