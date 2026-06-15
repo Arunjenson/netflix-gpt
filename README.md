@@ -7,6 +7,8 @@
  - useRef Hook
  - Firebase Integration
  - Deployment
+ - create signup/signin functionality
+ - Create redux store with User Slice
  
 
 
