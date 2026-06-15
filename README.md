@@ -4,6 +4,10 @@
  - Configure tailwind CSS
  - Routing
  - Form Validation
+ - useRef Hook
+ - Firebase Integration
+ - Deployment
+ 
 
 
 ## Features 
