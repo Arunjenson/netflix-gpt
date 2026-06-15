@@ -1,6 +1,9 @@
 import { useRef, useState } from "react"
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Header from "./Header"
 import {validateData} from "../utils/validate"
+import { auth } from "../utils/firebase"
+
 
 const Login = () => {
   const [isSignInForm,setIsSignInForm] = useState(true)
@@ -14,9 +17,31 @@ const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const validation = validateData(emailRef.current.value,passwordRef.current.value);
-    setErrorMessage(validation);
+    const hasErrorMessage = validateData(emailRef.current.value,passwordRef.current.value);
+    setErrorMessage(hasErrorMessage);
+    if(hasErrorMessage) return;
+
+    if(isSignInForm){
+      console.log("Sign In Form Submitted");
+    }else{
+      createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+
+    console.log("User signed up successfully:", user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorMessage + "-" + errorCode);
+    // ..
+  });
+    }
   }
+
+
   return (
     <div className="relative h-screen w-screen">
       <Header/>
