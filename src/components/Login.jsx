@@ -3,11 +3,13 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import Header from "./Header"
 import {validateData} from "../utils/validate"
 import { auth } from "../utils/firebase"
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
   const [isSignInForm,setIsSignInForm] = useState(true)
   const [errorMessage,setErrorMessage] = useState(null)
+  const navigate = useNavigate();
   const toggleForm = () => {
     setIsSignInForm(!isSignInForm)
   }
@@ -28,6 +30,8 @@ const Login = () => {
     // Signed in 
     const user = userCredential.user;
     console.log("User signed in successfully:", user);
+      navigate("/browse");
+
     // ...
   })
   .catch((error) => {
@@ -41,7 +45,7 @@ const Login = () => {
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
-
+      navigate("/browse");
     console.log("User signed up successfully:", user);
     // ...
   })
@@ -49,6 +53,8 @@ const Login = () => {
     const errorCode = error.code;
     const errorMessage = error.message;
     setErrorMessage(errorMessage + "-" + errorCode);
+      navigate("/");
+
     // ..
   });
     }
