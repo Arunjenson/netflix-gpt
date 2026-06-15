@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { Logo } from "./icons/logo";
 import { signOut } from "firebase/auth";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -22,7 +24,13 @@ const Header = () => {
         <Logo />
       </div>
       <div className="flex items-center gap-4">
-        <img src="https://occ-0-2086-3662.1.nflxso.net/dnm/api/v6/SO2HoVCx33X8phZh2pZZmQ4QgNY/AAAABYPt3lJsvK4CYb5m1jvGYzu8Is-KABjou0aC8-q8s-SnucAMp5g5X6aH9RrQKsB_fZFw_BQ3h8s4ZXlvTlF7ib8LChWNetM.png?r=7f4" />
+        {user?.photoURL && (
+          <img
+            src={user.photoURL}
+            alt="Profile"
+            className="w-10 h-10 rounded-full"
+          />
+        )}
         <button
           onClick={handleSignOut}
           className="bg-red-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
