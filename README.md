@@ -10,7 +10,7 @@
  - create signup/signin functionality
  - Create redux store with User Slice
  - SIgnup out
- - Update Profile
+ - Update Profiles
  
 
 
