@@ -39,7 +39,7 @@ const Header = () => {
       });
   };
   return (
-    <div className="absolute top-0 px-8 py-3 bg-linear-to-b from-black flex items-center justify-between w-full">
+    <div className="absolute top-0 left-0 right-0 px-8 py-3 bg-gradient-to-b from-black to-transparent flex items-center justify-between w-full z-50">
       <div className="">
         <Logo />
       </div>
