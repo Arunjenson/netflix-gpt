@@ -43,7 +43,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log("User signed in successfully:", user);
-          navigate("/browse");
 
           // ...
         })
@@ -69,7 +68,6 @@ const Login = () => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
               console.log({ uid, email, displayName, photoURL });
               dispatch(addUser({ uid, email, displayName, photoURL }));
-              navigate("/browse");
             })
             .catch((error) => {
               console.error("Error updating profile:", error);
