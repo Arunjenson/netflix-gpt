@@ -7,7 +7,6 @@ import {
 import Header from "./Header";
 import { validateData } from "../utils/validate";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
@@ -15,7 +14,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const toggleForm = () => {
     setIsSignInForm(!isSignInForm);
   };
@@ -80,9 +78,6 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorMessage + "-" + errorCode);
-          navigate("/");
-
-          // ..
         });
     }
   };

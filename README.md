@@ -11,6 +11,7 @@
  - Create redux store with User Slice
  - SIgnup out
  - Update Profiles
+ - Authenticate routes
  
 
 

@@ -19,7 +19,7 @@ const Header = () => {
         navigate("/browse");
       } else {
         dispatch(removeUser());
-        navigate("/"); // User is signed out, redirect to login page
+        navigate("/");
       }
     });
   }, []);
@@ -29,7 +29,6 @@ const Header = () => {
       .then(() => {
         console.log("User signed out successfully");
         dispatch(removeUser());
-        navigate("/");
       })
       .catch((error) => {
         navigate("/error");
