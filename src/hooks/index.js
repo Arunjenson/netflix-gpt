@@ -1,0 +1,1 @@
+export { useNowPlayingMovies } from './useNowPlayingMovies'
