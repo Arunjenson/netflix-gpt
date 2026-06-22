@@ -8,15 +8,44 @@ const GPTSearchBar = () => {
 
     console.log("GPT Search button clicked", searchInputRef.current.value);
     const gptResults = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
+        {
+          role: "system",
+          content:
+            "You are a movie recommendation assistant. When given a movie title or short description, return exactly 5 movie titles similar to that input. Output only the titles — either as a JSON array of strings or as five newline-separated titles. Do not include explanations, numbering, or any extra text.",
+        },
         {
           role: "user",
           content: `Suggest movies similar to: ${searchInputRef.current.value}`,
         },
+        {
+          role: "assistant",
+          content: `["Inception", "Shutter Island", "The Prestige", "Memento", "Interstellar"]`,
+        },
+        {
+          role: "user",
+          content: `Suggest movies similar to: The Matrix`,
+        },
+        {
+          role: "assistant",
+          content: `["Blade Runner", "Dark City", "Equilibrium", "Inception", "Total Recall"]`,
+        },
       ],
     });
-    console.log("GPT Results:", gptResults.choices[0].message.content);
+    const raw = gptResults.choices[0].message.content;
+    let movieList;
+    try {
+      movieList = JSON.parse(raw);
+      if (!Array.isArray(movieList)) throw new Error("not array");
+    } catch (e) {
+      movieList = raw
+        .split(/\r?\n/)
+        .map((s) => s.replace(/^\d+[\).\-\s]*/, "").trim())
+        .filter(Boolean)
+        .slice(0, 5);
+    }
+    console.log("GPT Results:", movieList);
   };
   return (
     <div className="w-full max-w-2xl mx-auto mt-8">
