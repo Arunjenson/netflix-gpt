@@ -5,6 +5,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
+import { handleGptSearch as toggleGptSearch } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -38,6 +39,9 @@ const Header = () => {
         console.error("Error signing out:", error);
       });
   };
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearch());
+  };
   return (
     <div className="absolute top-0 left-0 right-0 px-8 py-3 bg-gradient-to-b from-black to-transparent flex items-center justify-between w-full z-50">
       <div className="">
@@ -45,6 +49,12 @@ const Header = () => {
       </div>
       {user && (
         <div className="flex items-center gap-4">
+          <button
+            className="bg-purple-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            GPT Search
+          </button>
           {user.photoURL && (
             <img
               src={user.photoURL}
