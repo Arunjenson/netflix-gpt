@@ -9,5 +9,6 @@ export const API_OPTIONS = {
 };
 
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w780" 
-
-export const OPENAI_API_KEY = "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"
+export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AQ.Ab8RN6JhZ4dIvONDcT2PBa6HSwXCbbizPM3nrQRuVnFwuAfugg";
+export const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.5-flash";
+export const GEMINI_API_REVISION = import.meta.env.VITE_GEMINI_API_REVISION || "2026-05-20";
