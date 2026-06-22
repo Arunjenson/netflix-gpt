@@ -10,6 +10,7 @@ import { handleGptSearch as toggleGptSearch } from "../utils/gptSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isGptEnabled } = useSelector((state) => state.gpt);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -53,7 +54,7 @@ const Header = () => {
             className="bg-purple-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
             onClick={handleGptSearchClick}
           >
-            GPT Search
+            {!isGptEnabled ? "GPT Search" : "Homepage"}
           </button>
           {user.photoURL && (
             <img
