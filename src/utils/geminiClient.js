@@ -1,12 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 import { GEMINI_API_KEY, GEMINI_MODEL } from "./constants";
 
+const MOVIE_COUNT = 10;
+
 function parseMovieTitles(raw) {
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      return parsed.map((s) => String(s).trim()).filter(Boolean).slice(0, 5);
+      return parsed.map((s) => String(s).trim()).filter(Boolean).slice(0, MOVIE_COUNT);
     }
   } catch {
     // fall through to newline parsing
@@ -15,7 +17,7 @@ function parseMovieTitles(raw) {
     .split(/\r?\n/)
     .map((s) => s.replace(/^\d+[\).\-\s]*/, "").trim())
     .filter(Boolean)
-    .slice(0, 5);
+    .slice(0, MOVIE_COUNT);
 }
 
 const MAX_ATTEMPTS_PER_MODEL = 3;
@@ -60,13 +62,13 @@ async function callGeminiStructured(ai, model, query, temperature) {
     contents: `Suggest movies similar to: ${query}`,
     config: {
       systemInstruction:
-        "You are a movie recommendation assistant. Return exactly 5 movie titles similar to the input. Output only a JSON array of 5 strings. No numbering, explanations, or extra text.",
+        `You are a movie recommendation assistant. Return exactly ${MOVIE_COUNT} movie titles similar to the input. Output only a JSON array of ${MOVIE_COUNT} strings. No numbering, explanations, or extra text.`,
       responseMimeType: "application/json",
       responseSchema: {
         type: "array",
         items: { type: "string" },
-        minItems: 5,
-        maxItems: 5,
+        minItems: MOVIE_COUNT,
+        maxItems: MOVIE_COUNT,
       },
       temperature,
     },
@@ -77,7 +79,7 @@ async function callGeminiStructured(ai, model, query, temperature) {
 async function callGeminiPlain(ai, model, query, temperature) {
   const response = await ai.models.generateContent({
     model,
-    contents: `Suggest exactly 5 movies similar to "${query}". Reply with only a JSON array of 5 movie title strings.`,
+    contents: `Suggest exactly ${MOVIE_COUNT} movies similar to "${query}". Reply with only a JSON array of ${MOVIE_COUNT} movie title strings.`,
     config: { temperature },
   });
   return parseMovieTitles(response.text);
