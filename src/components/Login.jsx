@@ -17,6 +17,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const toggleForm = () => {
     setIsSignInForm(!isSignInForm);
+    setErrorMessage(null);
   };
   const emailRef = useRef(null);
   const nameRef = useRef(null);
@@ -65,18 +66,22 @@ const Login = () => {
   };
 
   return (
-    <div className="relative h-screen w-screen">
+    <div className="relative min-h-screen w-full overflow-x-hidden">
       <Header />
-      <div className="size-full absolute top-0 left-0 right-0 bottom-0 -z-10">
+      <div className="fixed inset-0 -z-10">
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/77c412a9-62ea-48a0-a5ee-466e11e851d5/web/IN-en-20260511-TRIFECTA-perspective_f0af4f75-4cc5-42bd-b0c5-2b65b8b50e03_large.jpg"
           alt=""
           className="w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-black/50 sm:bg-black/40" />
       </div>
-      <div className="z-10 flex items-center justify-center size-full mx-4 sm:mx-auto max-w-md">
-        <div className="bg-black/80 px-4 sm:px-8 py-8 sm:py-12 rounded-md w-full">
-          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-4">
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-20 sm:px-6 sm:py-24">
+        <form
+          onSubmit={handleFormSubmit}
+          className="w-full max-w-[450px] rounded-md bg-black/80 px-4 py-8 sm:px-12 sm:py-14"
+        >
+          <h1 className="mb-5 text-2xl font-bold text-white sm:mb-6 sm:text-3xl">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
           {!isSignInForm ? (
@@ -84,38 +89,45 @@ const Login = () => {
               ref={nameRef}
               type="text"
               placeholder="Full Name"
-              className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+              className="mb-3 w-full rounded-md bg-gray-800 p-3.5 text-base text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 sm:mb-4"
             />
           ) : null}
           <input
             ref={emailRef}
-            type="text"
+            type="email"
             placeholder="Email or phone number"
-            className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+            autoComplete="email"
+            className="mb-3 w-full rounded-md bg-gray-800 p-3.5 text-base text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 sm:mb-4"
           />
           <input
             ref={passwordRef}
             type="password"
             placeholder="Password"
-            className="w-full p-3 mb-4 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+            autoComplete={isSignInForm ? "current-password" : "new-password"}
+            className="mb-3 w-full rounded-md bg-gray-800 p-3.5 text-base text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 sm:mb-4"
           />
-          <p className="text-red-500 mb-2 font-bold text-lg">{errorMessage}</p>
+          {errorMessage ? (
+            <p className="mb-3 wrap-break-word text-sm font-semibold text-red-500 sm:text-base">
+              {errorMessage}
+            </p>
+          ) : null}
           <button
-            onClick={handleFormSubmit}
-            className="bg-red-600 cursor-pointer hover:bg-red-700 text-white font-medium py-2 px-4 w-full rounded"
+            type="submit"
+            className="mt-2 w-full cursor-pointer rounded bg-red-600 py-3 text-base font-medium text-white transition hover:bg-red-700 sm:py-3.5"
           >
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
-          <p className="text-white mt-10">
+          <p className="mt-6 text-sm text-white sm:mt-8 sm:text-base">
             {isSignInForm ? "New to Netflix?" : "Already have an account?"}{" "}
             <button
+              type="button"
               onClick={toggleForm}
-              className="text-white hover:underline cursor-pointer transition-all"
+              className="cursor-pointer text-white underline-offset-2 hover:underline"
             >
               {isSignInForm ? "Sign up now" : "Sign in now"}
             </button>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );
