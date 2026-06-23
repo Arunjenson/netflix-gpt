@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import MovieList from "./MovieList";
 
-const GPTMovieSuggestions = () => {
+const GPTMovieSuggestions = ({ onMovieClick }) => {
   const { gptMovies, gptSearchLoading, gptSearchError } = useSelector(
     (state) => state.gpt,
   );
@@ -24,7 +24,11 @@ const GPTMovieSuggestions = () => {
 
   return (
     <div className="w-full mt-6">
-      <MovieList title="GPT Recommendations" movies={gptMovies} />
+      <MovieList
+        title="GPT Recommendations"
+        movies={gptMovies}
+        onMovieClick={onMovieClick}
+      />
     </div>
   );
 };

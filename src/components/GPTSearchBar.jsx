@@ -61,17 +61,17 @@ const GPTSearchBar = () => {
           handleGPTSearchClick();
         }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <input
             type="text"
             ref={searchInputRef}
             placeholder="What movie are you looking for?"
-            className="w-full basis-4/5 p-4 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full sm:basis-4/5 p-3 sm:p-4 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-600"
           />
           <button
             type="submit"
             disabled={gptSearchLoading}
-            className="w-full basis-1/4 bg-purple-600 cursor-pointer h-14 text-white py-3 rounded font-semibold hover:bg-purple-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:basis-1/4 bg-purple-600 cursor-pointer h-12 sm:h-14 text-white py-3 rounded font-semibold hover:bg-purple-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {gptSearchLoading ? "Searching..." : "Search"}
           </button>

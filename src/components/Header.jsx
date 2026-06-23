@@ -14,8 +14,6 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
         const { uid, email, displayName, photoURL } = user;
         dispatch(addUser({ uid, email, displayName, photoURL }));
         navigate("/browse");
@@ -44,14 +42,14 @@ const Header = () => {
     dispatch(toggleGptSearch());
   };
   return (
-    <div className="absolute top-0 left-0 right-0 px-8 py-3 bg-gradient-to-b from-black to-transparent flex items-center justify-between w-full z-50">
-      <div className="">
+    <div className="absolute top-0 left-0 right-0 px-4 sm:px-8 py-3 bg-gradient-to-b from-black to-transparent flex items-center justify-between w-full z-50">
+      <div>
         <Logo />
       </div>
       {user && (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <button
-            className="bg-purple-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
+            className="bg-purple-600 text-white text-sm px-2 py-1.5 sm:px-4 sm:py-2 rounded font-semibold cursor-pointer"
             onClick={handleGptSearchClick}
           >
             {!isGptEnabled ? "GPT Search" : "Homepage"}
@@ -60,12 +58,12 @@ const Header = () => {
             <img
               src={user.photoURL}
               alt="Profile"
-              className="w-10 h-10 rounded-full"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
             />
           )}
           <button
             onClick={handleSignOut}
-            className="bg-red-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
+            className="bg-red-600 text-white text-sm px-2 py-1.5 sm:px-4 sm:py-2 rounded font-semibold cursor-pointer"
           >
             Sign out
           </button>

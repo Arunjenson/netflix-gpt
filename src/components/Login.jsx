@@ -90,11 +90,12 @@ const Login = () => {
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/77c412a9-62ea-48a0-a5ee-466e11e851d5/web/IN-en-20260511-TRIFECTA-perspective_f0af4f75-4cc5-42bd-b0c5-2b65b8b50e03_large.jpg"
           alt=""
+          className="w-full h-full object-cover"
         />
       </div>
-      <div className="z-10 flex items-center justify-center size-full max-w-md mx-auto">
-        <div className="bg-black/80 px-8 py-12 rounded-md">
-          <h1 className="text-4xl font-bold text-white mb-4">
+      <div className="z-10 flex items-center justify-center size-full mx-4 sm:mx-auto max-w-md">
+        <div className="bg-black/80 px-4 sm:px-8 py-8 sm:py-12 rounded-md w-full">
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-4">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
           {!isSignInForm ? (
