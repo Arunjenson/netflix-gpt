@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getMovieDetails,
   getMovieCredits,
   getMovieVideos,
 } from "../utils/tmdb";
+import { setMovieDetails } from "../utils/movieSlice";
 
 export function useMovieDetails(movieId) {
-  const [details, setDetails] = useState(null);
-  const [credits, setCredits] = useState(null);
-  const [trailer, setTrailer] = useState(null);
+  const dispatch = useDispatch();
+  const cached = useSelector(
+    (store) => (movieId ? store.movies.movieDetailsCache[movieId] : null),
+  );
+
+  const [details, setDetails] = useState(cached?.details ?? null);
+  const [credits, setCredits] = useState(cached?.credits ?? null);
+  const [trailer, setTrailer] = useState(cached?.trailer ?? null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,6 +24,15 @@ export function useMovieDetails(movieId) {
       setDetails(null);
       setCredits(null);
       setTrailer(null);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    if (cached) {
+      setDetails(cached.details);
+      setCredits(cached.credits);
+      setTrailer(cached.trailer);
       setLoading(false);
       setError(null);
       return;
@@ -42,6 +58,14 @@ export function useMovieDetails(movieId) {
           setDetails(movieDetails);
           setCredits(movieCredits);
           setTrailer(movieTrailer);
+          dispatch(
+            setMovieDetails({
+              movieId,
+              details: movieDetails,
+              credits: movieCredits,
+              trailer: movieTrailer,
+            }),
+          );
         }
       } catch (err) {
         if (!cancelled) {
@@ -59,7 +83,7 @@ export function useMovieDetails(movieId) {
     return () => {
       cancelled = true;
     };
-  }, [movieId]);
+  }, [movieId, cached, dispatch]);
 
   const cast = credits?.cast?.slice(0, 8) ?? [];
   const director =
