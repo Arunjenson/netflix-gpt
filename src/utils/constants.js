@@ -8,7 +8,6 @@ export const API_OPTIONS = {
   }
 };
 
-export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w780" 
-export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AQ.Ab8RN6JhZ4dIvONDcT2PBa6HSwXCbbizPM3nrQRuVnFwuAfugg";
-export const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.5-flash";
-export const GEMINI_API_REVISION = import.meta.env.VITE_GEMINI_API_REVISION || "2026-05-20";
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w780"
+export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+export const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.1-flash-lite";
