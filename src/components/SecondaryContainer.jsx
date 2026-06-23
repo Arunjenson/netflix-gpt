@@ -23,21 +23,6 @@ const SecondaryContainer = ({ onMovieClick }) => {
           movies={topRatedMovies}
           onMovieClick={onMovieClick}
         />
-        <MovieList
-          title="Now Playing"
-          movies={movies}
-          onMovieClick={onMovieClick}
-        />
-        <MovieList
-          title="Now Playing"
-          movies={movies}
-          onMovieClick={onMovieClick}
-        />
-        <MovieList
-          title="Now Playing"
-          movies={movies}
-          onMovieClick={onMovieClick}
-        />
       </div>
     </div>
   );

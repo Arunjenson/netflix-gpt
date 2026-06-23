@@ -55,7 +55,6 @@ const GPTSearchBar = () => {
   return (
     <div className="w-full max-w-2xl mx-auto mt-8">
       <form
-        className="w-full max-w-2xl mx-auto mt-8"
         onSubmit={(e) => {
           e.preventDefault();
           handleGPTSearchClick();

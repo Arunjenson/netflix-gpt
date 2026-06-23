@@ -32,53 +32,34 @@ const Login = () => {
     if (hasErrorMessage) return;
 
     if (isSignInForm) {
-      console.log("Sign In Form Submitted");
       signInWithEmailAndPassword(
         auth,
         emailRef.current.value,
         passwordRef.current.value,
-      )
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("User signed in successfully:", user);
-
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage + "-" + errorCode);
-        });
+      ).catch((error) => {
+        setErrorMessage(error.message + "-" + error.code);
+      });
     } else {
       createUserWithEmailAndPassword(
         auth,
         emailRef.current.value,
         passwordRef.current.value,
       )
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
+        .then(() => {
           updateProfile(auth.currentUser, {
             displayName: nameRef.current.value,
             photoURL: DEFAULT_PROFILE_IMAGE,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
-              console.log({ uid, email, displayName, photoURL });
               dispatch(addUser({ uid, email, displayName, photoURL }));
             })
             .catch((error) => {
               console.error("Error updating profile:", error);
             });
-
-          console.log("User signed up successfully:", user);
-          // ...
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage + "-" + errorCode);
+          setErrorMessage(error.message + "-" + error.code);
         });
     }
   };
