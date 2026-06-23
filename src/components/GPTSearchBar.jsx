@@ -7,6 +7,8 @@ import {
   clearGptMovies,
 } from "../utils/gptSlice";
 import { searchMovieByTitle } from "../utils/tmdb";
+import { generateMovieTitles, getGeminiErrorMessage } from "../utils/geminiClient";
+import { GEMINI_API_KEY } from "../utils/constants";
 
 const GPTSearchBar = () => {
   const searchInputRef = useRef(null);
@@ -17,37 +19,17 @@ const GPTSearchBar = () => {
     const query = searchInputRef.current?.value?.trim();
     if (!query) return;
 
+    if (!GEMINI_API_KEY) {
+      dispatch(setGptSearchError("Set VITE_GEMINI_API_KEY in .env before building"));
+      return;
+    }
+
     dispatch(clearGptMovies());
     dispatch(setGptSearchLoading(true));
     dispatch(setGptSearchError(null));
 
     try {
-      const response = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query,
-          temperature: 0.2,
-        }),
-      });
-
-      const respText = await response.text();
-      let data;
-      try {
-        data = respText ? JSON.parse(respText) : {};
-      } catch {
-        throw new Error(
-          `Gemini non-JSON response (${response.status}): ${respText}`,
-        );
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || data.details || `Gemini API request failed (${response.status})`,
-        );
-      }
-
-      const titles = data.movies;
+      const titles = await generateMovieTitles(query, 0.2);
       if (!Array.isArray(titles) || titles.length === 0) {
         throw new Error("Gemini returned no movie titles");
       }
@@ -64,7 +46,7 @@ const GPTSearchBar = () => {
       dispatch(setGptMovies(movies));
     } catch (error) {
       console.error("Gemini request failed", error);
-      dispatch(setGptSearchError(error.message || "Search failed"));
+      dispatch(setGptSearchError(getGeminiErrorMessage(error) || "Search failed"));
     } finally {
       dispatch(setGptSearchLoading(false));
     }
